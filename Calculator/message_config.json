@@ -1,0 +1,10 @@
+{
+  "welcome": "Welcome to Calculator",
+  "num1Msg": "What's the first number?",
+  "num2Msg": "What's the second number?",
+  "invalidNumberMsg": "That's not a number",
+  "operationMsg": "What operation would you like to perform?\n1) Add 2) Subtract 3) Multiply 4) Divide",
+  "operationInvalidMsg": "That's not a valid operation enter 1, 2, 3, or 4.",
+  "resultMsg": "The result is: ",
+  "continueMsg": "Would you like to continue"
+}
