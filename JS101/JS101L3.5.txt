@@ -1,0 +1,23 @@
+Q1: for(let a=0;a<10;a++){console.log(" ".repeat(a)+"The Flintstones Rock!")}
+
+Q2: Array.toArray(string).reduce((accum,element)=>element===element.toUpperCase()?accum+element.toLowerCase():accum+element.toUpperCase(),"")
+
+Q3: Just move while() to where do was, and change it to divisor > 0. while (divisor > 0)
+Bonus: Divides the number and checks if there's remainder
+  B-Bonus: It would just reverse the order the factors are displayed in
+
+Q4: Yes Concat will always create a new Array which leads to worse preformance, if you're always adding primivative elements it's better to use push.
+from the way it's implemnted the first method doesn't require the buffer to be returned because it mutates it based on the pointer given, in the second a duplicate buffer is created and if it's larger it's mutated by .shift() and returned. The second method requires the returned to be set to the old pointer, the first doesn't.
+
+Q5: I've heard of this issue before there's floating point issues with it so it returns a slightly different float from 0.9 and gives you false.
+
+Q6: false, you can't compare NaNs 
+Bonus: Use Number.isNaN()
+
+Q7: 34
+
+Q8: Yes because the values of the munster object are also pointers, sending it through the function just creates another pointer while Object.values() returns pointers to the object storing each member's data which is modified.
+
+Q9: paper
+
+Q10: "no"

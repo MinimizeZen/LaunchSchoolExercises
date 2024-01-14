@@ -1,27 +1,11 @@
-{
+let accum = ""
+let str = "The Munsters are creepy and spooky."
+let arrStr = Array.from(str)
+for (let i = 0; i < arrStr.length; i++) {
+  console.log(arrStr);
+  console.log(arrStr[i]);
+  console.log(arrStr[i].toUpperCase());
 
-
-  let a = [1];
-  testFunc(a)
-
-  //console.log(a)
-  function testFunc(array) {
-    array ? array[0] = 2 : null;
-  }
+  (arrStr[i] === arrStr[i].toUpperCase()) ? accum = accum + arrStr[i].toLowerCase() : accum = accum + arrStr[i].toUpperCase()
 }
-//arr = [1]
-//testFunc(arr)
-//console.log(arr)
-//console.log(a)
-
-let a = 2;
-let b = Math.floor(Math.random() * 2);
-a *= b;
-
-if (a = 2) {
-  console.log('The value of `a` is two.');
-} else {
-  console.log('The value of `a` is NOT two.');
-}
-
-
+console.log(accum);

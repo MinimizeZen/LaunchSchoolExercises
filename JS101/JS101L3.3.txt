@@ -1,0 +1,21 @@
+Q1: advice.replaceAll('important','urgent');
+
+Q2: numbers.concat().reverse() 
+    numbers.concat().sort((element1,element2)=>element2-element-1);
+Bonus: reverseNumbers = []; numbers.forEach(num => reverseNumbers.unshift(num))
+
+Q3: numbers.includes(number1); numbers.includes(number2);
+
+Q4: "Four score and " + famousWords; "Four score and ".concat(famousWords);
+
+Q5: [1,2,3,4,5].splice(2,1);
+
+Q6: flintsones = flintstones.reduce((accum,element) => accum.concat(element),[]);
+
+Q7: ["Barney",flintstones."Barney"]
+
+Q8: Array.isArray(numbers); Array.isArray(table)
+
+Q9: title = title.padStart(Math.floor((40-title.length)/2))
+
+Q10: tCount = Array.from(statement).reduce((accum,element)=>element==="t"?accum+1:accum,0);

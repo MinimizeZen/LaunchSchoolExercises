@@ -1,0 +1,16 @@
+Q1: numbers = []; while(numbers.length > 0){numbers.pop()} ; numbers.filter(_ => false)
+
+Q2: [1,2,3,4,5]
+    *Actual answer"1,2,34,5"
+
+Q3: "hello there"
+
+Q4: [{ first: 4 }, { second: "value2" }, 3, 4, 5]
+
+Q5: function isColorValid(color) { return (color === "blue" || color === "green");
+    function isColorValid(color) { return ["blue","green"].includes(color);}
+
+Q6: var: arr newarr num newnum num(function) double
+    val: 1,2,3 (arr,newarr) | 0(arr[0]) | 1(num) | 1(newnum) | 1(num) | 2(num * 2) | 2(result of num * 2)
+    obj: [1,2,3](arr,newarr) | <function> double
+

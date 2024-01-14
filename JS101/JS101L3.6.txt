@@ -1,0 +1,21 @@
+Q1: No, the first one will work propertly
+Note: I think the question would be more interesting if the second example had a , after "prop1: 'hi there'" instead of ";" as that makes it obviously wrong.
+
+Q2: {"first:[1,2]"}
+
+Q3: A: "one is one" "two is two" "three is three"
+    B: "one is one" "two is two" "three is three"
+    C: "one is two", "two is three", "three is one"
+
+Q4: Not doing this
+
+Q5: function isDotSeparatedIpAddress(inputString) {
+    ipParts = inputString.split('.')
+    if(ipParts.length()!==4){return false}
+    while(ipParts.length>0) {
+      if(!isAnIpNumber(ipParts.pop())){
+          return false
+        }
+    }
+    retirm true
+  }

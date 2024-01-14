@@ -1,0 +1,21 @@
+Q1: It will not raise an error, there'll just be 3 undefined from numbers[3]-numbers[5] Bonus: undefined
+
+Q2: str[str.length-1]==="!" 
+  *Actual answer is the str.endsWith("!") method
+
+Q3: ages.spot===undefined
+  *Actual answer uses Object.prototype.hasOwnProperty()
+
+Q4 str[0].toUpperCase() + str.slice(1).toLowerCase()
+
+Q5 true, false
+
+Q6: Object.assign(ages, additionalAges)
+
+Q7: str1.indexof("Dino")!==-1 || str2.indexOf("Dino")!==-1
+
+Q8: flintstone.push("Dino")
+
+Q9: .push also works with multiple arguments
+
+Q10: advice.slice(0, advice.indexOf("house"));
