@@ -1,7 +1,7 @@
 JS101/test.js
 test.js
 node_modules
-.eslinerc.xml
+.eslintrc.yml
 package-lock.json
 package.json
 
