@@ -1,0 +1,12 @@
+1) [1,2,3] Because 'hi' is a truthy .filter will include all elements of the array.
+2) [undefined,undefined,undefined] because there's no returen value and it's in the code block
+3) [1,4,9] It now works properly because it's taking the return value of the function implicitly
+4) 11 Array.prototype.pop() returns the element that it remove from the array which in this case is 'caterpillar' .length is then called on it which returns 11
+5)[2,4,6] true
+6)It will fill from the 2nd parameter to the 3rd parameter with the 1st parameter. You can check by calling arr after running fill on it without reassignment.
+7)[undefined,'bear'] the default return value is undefined, if the length of the element is longer than 3 it's returned.
+8)let flintstones = ["Fred", "Barney", "Wilma", "Betty", "Pebbles", "Bambam"];
+Object.fromEntries(flintstone.map((value,index)=>[value,index))
+9) Object.entries(ages).reduce((accum,elem) => accum+elem[1] , 0)
+10) ages.values().reduce((min,elem)=> elem<min?elem:min,Number.MAX_VALUE)
+11) statement.split('').filter(elem=> elem!==' ').reduce((accum,elem)=> {accum[elem]?accum[elem]+1:accum[elem]=1; return accum;},{})
