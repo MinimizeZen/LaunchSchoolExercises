@@ -180,6 +180,61 @@ function MergeSort() {
   console.log(mergeSort([7, 3, 9, 15, 23, 1, 6, 51, 22, 37, 54, 43, 5, 25, 35, 18, 46]));
   // [1, 3, 5, 6, 7, 9, 15, 18, 22, 23, 25, 35, 37, 43, 46, 51, 54]
 }
+function binarySearch(arr, target, index = 0) {
+  if (arr.length === 1) {
+    return arr[0] === target ? index : -1
+  }
+  return target > arr[Math.floor(arr.length / 2) - 1] ? binarySearch(arr.slice(Math.floor(arr.length / 2)), target, index + Math.floor(arr.length / 2)) : binarySearch(arr.slice(0, Math.floor(arr.length / 2)), target, index);
+}
+function BinarySearch() {
+  let yellowPages = ['Apple Store', 'Bags Galore', 'Bike Store', 'Donuts R Us', 'Eat a Lot', 'Good Food', 'Pasta Place', 'Pizzeria', 'Tiki Lounge', 'Zooper'];
+  console.log(binarySearch(yellowPages, 'Pizzeria'));                   // 7
+  console.log(binarySearch(yellowPages, 'Apple Store'));                // 0
+
+  console.log(binarySearch([1, 5, 7, 11, 23, 45, 65, 89, 102], 77));    // -1
+  console.log(binarySearch([1, 5, 7, 11, 23, 45, 65, 89, 102], 89));    // 7
+  console.log(binarySearch([1, 5, 7, 11, 23, 45, 65, 89, 102], 5));     // 1
+
+  console.log(binarySearch(['Alice', 'Bonnie', 'Kim', 'Pete', 'Rachel', 'Sue', 'Tyler'], 'Peter'));  // -1
+  console.log(binarySearch(['Alice', 'Bonnie', 'Kim', 'Pete', 'Rachel', 'Sue', 'Tyler'], 'Tyler'));  // 6
+}
+function lightsOn(num) {
+  let state = Array(num).fill(false);
+  for (let a = 0; a <= num; a++) {
+    for (let b = a; b < num; b += (a + 1)) {
+      state[b] = !state[b];
+    }
+  }
+  return state.map((elem, index) => elem ? index + 1 : false).filter(elem => elem);
+}
+function _1000Lights() {
+  console.log(lightsOn(5));        // [1, 4]
+  // Detailed result of each round for `5` lights
+  // Round 1: all lights are on
+  // Round 2: lights 2 and 4 are now off;     1, 3, and 5 are on
+  // Round 3: lights 2, 3, and 4 are now off; 1 and 5 are on
+  // Round 4: lights 2 and 3 are now off;     1, 4, and 5 are on
+  // Round 5: lights 2, 3, and 5 are now off; 1 and 4 are on
+
+  console.log(lightsOn(100));      // [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+}
+function star(num) {
+  let space = (num - 3) / 2;
+  for (let a = 0; a < num; a++) {
+    if (a < Math.floor(num / 2)) {
+      console.log(`${" ".repeat(a)}*${" ".repeat(space - a)}*${" ".repeat(space - a)}*${" ".repeat(a)}`)
+    } else if (a === Math.floor(num / 2)) {
+      console.log('*'.repeat(num))
+    } else {
+      console.log(`${" ".repeat(num - a - (num - 1) / 2 + space)}*${" ".repeat(a - 1 - (num - 1) / 2)}*${" ".repeat(a - 1 - (num - 1) / 2)}*${" ".repeat(num - a - (num - 1) / 2 + space)}`)
+    }
+
+  }
+}
+function SeeingStars() {
+  star(7);
+  star(9);
+}
 //TriangleSides();
 //NextFeaturedNumberHigherthanaGivenValue();
 //BubbleSort();
@@ -187,7 +242,7 @@ function MergeSort() {
 //TransposeMxNMatrix();
 //RotatingMatrix()
 //MergeSortedLists();
-MergeSort();
-
-
-
+//MergeSort();
+//BinarySearch()
+//_1000Lights();
+SeeingStars();
