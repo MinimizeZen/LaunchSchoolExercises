@@ -219,6 +219,7 @@ function _1000Lights() {
   console.log(lightsOn(100));      // [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
 }
 function star(num) {
+  debugger;
   let space = (num - 3) / 2;
   for (let a = 0; a < num; a++) {
     if (a < Math.floor(num / 2)) {
