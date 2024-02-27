@@ -1,0 +1,36 @@
+
+input: integer value of the number of blocks
+output: integer values number of blocks left over after the max amount of layers are built.
+//first layer: 1
+//second layer: 5
+//third layer: 14
+//fourth layer 30
+  explicit rules:  
+    Blocks are cubes.
+    Top layer is a single block
+    each block must have 4 blocks supporting it.
+    each block can support up to 4 blocks
+  implicit rules:
+    NumOfBlocksAtLayer= NumOfBlocksAtPrevLayer + Layer^2
+
+DataStructure:
+  You need to know the number of blocks in each previous layer to know the number of blocks in the current layer. You could use a list but you could also just store the the usedBlocks variable until it's bigger than Input
+
+Algorithm:
+  Loop layers until the number of cubes used is larger than the input and subtract the previous layer's used cubes from input
+1) start with layer 1 and value used blocks of 0
+2) loop through layers so long as (usedBlocks + NumOfBlocksAtLayer < `Input`)
+3) if the condition is not met add BlocksInLayer to usedBlocks
+4) if the condition is met just return `Input-usedBlocks`
+
+function calculateLeftoverBlocks(numBlocks) {
+  let usedBlocks = 0;
+  let blocksInLayer = 1;
+  for(let layer =1;;layer++){
+    blocksInLayer = layer**2;
+    if(usedBlocks+blocksInLayer>numBlocks){
+      return numBlocks - usedBlocks;
+    }
+    usedBlocks+=blocksInLayer;
+  } 
+}

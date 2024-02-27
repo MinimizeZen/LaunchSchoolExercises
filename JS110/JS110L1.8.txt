@@ -1,0 +1,50 @@
+Input: array of Strings
+Output: new array of Strigns sorted by the number of adjecent consonants(and y,w) in the Strings
+//sorted from 
+//each String can have a space
+test cases:let list1 = ['aa', 'baa', 'ccaa', 'dddaa'];
+console.log(sortStringsByConsonants(list1));
+// ['dddaa', 'ccaa', 'aa', 'baa']
+
+let list2 = ['can can', 'toucan', 'batman', 'salt pan'];
+console.log(sortStringsByConsonants(list2));
+// ['salt pan', 'can can', 'batman', 'toucan']
+
+let list3 = ['bar', 'car', 'far', 'jar'];
+console.log(sortStringsByConsonants(list3));
+// ['bar', 'car', 'far', 'jar']
+
+let list4 = ['day', 'week', 'month', 'year'];
+console.log(sortStringsByConsonants(list4));
+// ['month', 'day', 'week', 'year']
+data structure:
+there's going to be a list or string to store vowels
+Output should probably just be a clone at first as original order does matter.
+create list of number of adjacent consonants for each string
+Use Array.sort() to sort the array.
+Algorithm:
+Create list of vowels
+loop through each string determining the number of adjecent consonants in the string 
+sort a clone of the Input based on that number and return it 
+
+code:
+function sortStringsByConsonants(arr) {
+  let vowels = 'aeiou';
+  let vowelCount = {};
+  arr.forEach(elem => vowelCount[elem] = countAdjConsonants(elem));
+  return arr.slice().sort((a, b) => vowelCount[b] - vowelCount[a]);
+
+  function countAdjConsonants(str) {
+    str = str.replaceAll(" ","")
+    let output = 0;
+    let curr = 0;
+    for (let a = 0; a < str.length; a++) {
+      if (vowels.includes(str[a])) {
+        output = Math.max(output, curr);
+        curr = 0;
+      }
+      curr++;
+    }
+    return output === 1 ? 0 : output;
+  }
+}
