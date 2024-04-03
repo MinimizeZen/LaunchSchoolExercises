@@ -23,7 +23,6 @@ class RomanNumeral {
     let RomanNums = Object.keys(RomanNumeral.ROMAN_NUMERALS)
       .map((elem) => elem)
       .sort((a, b) => b - a);
-    console.log(RomanNums);
     while (Val > 0) {
       let Operat = Number(RomanNums.find((elem) => elem <= Val));
       Val -= Operat;
