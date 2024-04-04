@@ -978,3 +978,609 @@ describe("Robot Name", () => {
     expect(name1).not.toBe(name2);
   });
 });
+
+const Clock = require("./clock.js");
+
+describe("Clock", () => {
+  test("on the hour", () => {
+    expect(Clock.at(8).toString()).toBe("08:00");
+    expect(Clock.at(9).toString()).toBe("09:00");
+  });
+
+  test("past the hour", () => {
+    expect(Clock.at(11, 9).toString()).toBe("11:09");
+  });
+
+  test("add a few minutes", () => {
+    let clock = Clock.at(10).add(3);
+    expect(clock.toString()).toBe("10:03");
+  });
+
+  test("adding does not mutate", () => {
+    let oldClock = Clock.at(10);
+    let newClock = oldClock.add(3);
+    expect(newClock).not.toBe(oldClock);
+  });
+
+  test("subtract fifty minutes", () => {
+    let clock = Clock.at(0).subtract(50);
+    expect(clock.toString()).toBe("23:10");
+  });
+
+  test("subtracting does not mutate", () => {
+    let oldClock = Clock.at(10);
+    let newClock = oldClock.subtract(50);
+    expect(newClock).not.toBe(oldClock);
+  });
+
+  test("add over an hour", () => {
+    let clock = Clock.at(10).add(61);
+    expect(clock.toString()).toBe("11:01");
+  });
+
+  test("wrap around at midnight", () => {
+    let clock = Clock.at(23, 30).add(60);
+    expect(clock.toString()).toBe("00:30");
+  });
+
+  test("add more than a day", () => {
+    let clock = Clock.at(10).add(3061);
+    expect(clock.toString()).toBe("13:01");
+  });
+
+  test("subtract a few minutes", () => {
+    let clock = Clock.at(10, 30).subtract(5);
+    expect(clock.toString()).toBe("10:25");
+  });
+
+  test("subtract minutes", () => {
+    let clock = Clock.at(10).subtract(90);
+    expect(clock.toString()).toBe("08:30");
+  });
+
+  test("equivalent clocks", () => {
+    let clock1 = Clock.at(15, 37);
+    let clock2 = Clock.at(15, 37);
+
+    expect(clock1.isEqual(clock2)).toBe(true);
+  });
+
+  test("wrap around at negative midnight", () => {
+    let clock = Clock.at(0, 30).subtract(60);
+    expect(clock.toString()).toBe("23:30");
+  });
+
+  test("subtract more than a day", () => {
+    let clock = Clock.at(10).subtract(3061);
+    expect(clock.toString()).toBe("06:59");
+  });
+
+  test("inequivalent clocks", () => {
+    let clock1 = Clock.at(15, 37);
+    let clock2 = Clock.at(15, 36);
+    let clock3 = Clock.at(14, 37);
+
+    expect(clock1.isEqual(clock2)).toBe(false);
+    expect(clock1.isEqual(clock3)).toBe(false);
+  });
+
+  test("wrap around backwards", () => {
+    let clock = Clock.at(0, 30).subtract(60);
+    expect(clock.toString()).toEqual("23:30");
+  });
+});
+
+("use strict");
+
+let Meetup = require("./meetup.js");
+
+function dateAsString(year, month, day) {
+  let date = new Date(year, month - 1, day);
+  return date.toString();
+}
+
+// Define a class Meetup with a constructor taking a month and a year
+// and a method day(weekday, schedule).
+// where weekday is one of: monday, tuesday, wednesday, etc.
+// and schedule is: first, second, third, fourth, fifth, last, or teenth.
+
+/* eslint-disable-next-line max-lines-per-function, max-statements */
+describe("meetup()", () => {
+  test("test first Monday of March 2013", () => {
+    let meetup = new Meetup(2013, 3);
+    let expected = dateAsString(2013, 3, 4);
+    expect(meetup.day("Monday", "first").toString()).toBe(expected);
+  });
+
+  test("test first Monday of april 2013", () => {
+    let meetup = new Meetup(2013, 4);
+    let expected = dateAsString(2013, 4, 1);
+    expect(meetup.day("monday", "FIRST").toString()).toBe(expected);
+  });
+
+  test("test first Tuesday of may 2013", () => {
+    let meetup = new Meetup(2013, 5);
+    let expected = dateAsString(2013, 5, 7);
+    expect(meetup.day("Tuesday", "first").toString()).toBe(expected);
+  });
+
+  test("test first Wednesday of june 2013", () => {
+    let meetup = new Meetup(2013, 6);
+    let expected = dateAsString(2013, 6, 5);
+    expect(meetup.day("wednesday", "first").toString()).toBe(expected);
+  });
+
+  test("test first Thursday of july 2013", () => {
+    let meetup = new Meetup(2013, 7);
+    let expected = dateAsString(2013, 7, 4);
+    expect(meetup.day("Thursday", "first").toString()).toBe(expected);
+  });
+
+  test("test first Friday of august 2013", () => {
+    let meetup = new Meetup(2013, 8);
+    let expected = dateAsString(2013, 8, 2);
+    expect(meetup.day("Friday", "first").toString()).toBe(expected);
+  });
+
+  test("test first Saturday of september 2013", () => {
+    let meetup = new Meetup(2013, 9);
+    let expected = dateAsString(2013, 9, 7);
+    expect(meetup.day("Saturday", "first").toString()).toBe(expected);
+  });
+
+  test("test first Sunday of october 2013", () => {
+    let meetup = new Meetup(2013, 10);
+    let expected = dateAsString(2013, 10, 6);
+    expect(meetup.day("Sunday", "first").toString()).toBe(expected);
+  });
+
+  test("test second Monday of november 2013", () => {
+    let meetup = new Meetup(2013, 11);
+    let expected = dateAsString(2013, 11, 11);
+    expect(meetup.day("Monday", "second").toString()).toBe(expected);
+  });
+
+  test("test second Tuesday of december 2013", () => {
+    let meetup = new Meetup(2013, 12);
+    let expected = dateAsString(2013, 12, 10);
+    expect(meetup.day("Tuesday", "second").toString()).toBe(expected);
+  });
+
+  test("test second Wednesday of january 2014", () => {
+    let meetup = new Meetup(2014, 1);
+    let expected = dateAsString(2014, 1, 8);
+    expect(meetup.day("Wednesday", "second").toString()).toBe(expected);
+  });
+
+  test("test second Thursday of february 2014", () => {
+    let meetup = new Meetup(2014, 2);
+    let expected = dateAsString(2014, 2, 13);
+    expect(meetup.day("Thursday", "second").toString()).toBe(expected);
+  });
+
+  test("test second Friday of march 2014", () => {
+    let meetup = new Meetup(2014, 3);
+    let expected = dateAsString(2014, 3, 14);
+    expect(meetup.day("Friday", "second").toString()).toBe(expected);
+  });
+
+  test("test second Saturday of april 2014", () => {
+    let meetup = new Meetup(2014, 4);
+    let expected = dateAsString(2014, 4, 12);
+    expect(meetup.day("Saturday", "second").toString()).toBe(expected);
+  });
+
+  test("test second Sunday of may 2014", () => {
+    let meetup = new Meetup(2014, 5);
+    let expected = dateAsString(2014, 5, 11);
+    expect(meetup.day("Sunday", "second").toString()).toBe(expected);
+  });
+
+  test("test third Monday of june 2014", () => {
+    let meetup = new Meetup(2014, 6);
+    let expected = dateAsString(2014, 6, 16);
+    expect(meetup.day("Monday", "third").toString()).toBe(expected);
+  });
+
+  test("test third Tuesday of july 2014", () => {
+    let meetup = new Meetup(2014, 7);
+    let expected = dateAsString(2014, 7, 15);
+    expect(meetup.day("Tuesday", "third").toString()).toBe(expected);
+  });
+
+  test("test third Wednesday of august 2014", () => {
+    let meetup = new Meetup(2014, 8);
+    let expected = dateAsString(2014, 8, 20);
+    expect(meetup.day("Wednesday", "third").toString()).toBe(expected);
+  });
+
+  test("test third Thursday of september 2014", () => {
+    let meetup = new Meetup(2014, 9);
+    let expected = dateAsString(2014, 9, 18);
+    expect(meetup.day("Thursday", "third").toString()).toBe(expected);
+  });
+
+  test("test third Friday of october 2014", () => {
+    let meetup = new Meetup(2014, 10);
+    let expected = dateAsString(2014, 10, 17);
+    expect(meetup.day("Friday", "third").toString()).toBe(expected);
+  });
+
+  test("test third Saturday of november 2014", () => {
+    let meetup = new Meetup(2014, 11);
+    let expected = dateAsString(2014, 11, 15);
+    expect(meetup.day("Saturday", "third").toString()).toBe(expected);
+  });
+
+  test("test third Sunday of december 2014", () => {
+    let meetup = new Meetup(2014, 12);
+    let expected = dateAsString(2014, 12, 21);
+    expect(meetup.day("Sunday", "third").toString()).toBe(expected);
+  });
+
+  test("test fourth Monday of january 2015", () => {
+    let meetup = new Meetup(2015, 1);
+    let expected = dateAsString(2015, 1, 26);
+    expect(meetup.day("Monday", "fourth").toString()).toBe(expected);
+  });
+
+  test("test fourth Tuesday of february 2015", () => {
+    let meetup = new Meetup(2015, 2);
+    let expected = dateAsString(2015, 2, 24);
+    expect(meetup.day("Tuesday", "fourth").toString()).toBe(expected);
+  });
+
+  test("test fourth Wednesday of march 2015", () => {
+    let meetup = new Meetup(2015, 3);
+    let expected = dateAsString(2015, 3, 25);
+    expect(meetup.day("Wednesday", "fourth").toString()).toBe(expected);
+  });
+
+  test("test fourth Thursday of april 2015", () => {
+    let meetup = new Meetup(2015, 4);
+    let expected = dateAsString(2015, 4, 23);
+    expect(meetup.day("Thursday", "fourth").toString()).toBe(expected);
+  });
+
+  test("test fourth Friday of may 2015", () => {
+    let meetup = new Meetup(2015, 5);
+    let expected = dateAsString(2015, 5, 22);
+    expect(meetup.day("Friday", "fourth").toString()).toBe(expected);
+  });
+
+  test("test fourth Saturday of june 2015", () => {
+    let meetup = new Meetup(2015, 6);
+    let expected = dateAsString(2015, 6, 27);
+    expect(meetup.day("Saturday", "fourth").toString()).toBe(expected);
+  });
+
+  test("test fourth Sunday of july 2015", () => {
+    let meetup = new Meetup(2015, 7);
+    let expected = dateAsString(2015, 7, 26);
+    expect(meetup.day("Sunday", "fourth").toString()).toBe(expected);
+  });
+
+  test("test fifth Monday of august 2015", () => {
+    let meetup = new Meetup(2015, 8);
+    let expected = dateAsString(2015, 8, 31);
+    expect(meetup.day("Monday", "fifth").toString()).toBe(expected);
+  });
+
+  test("test fifth Tuesday of september 2015", () => {
+    let meetup = new Meetup(2015, 9);
+    let expected = dateAsString(2015, 9, 29);
+    expect(meetup.day("Tuesday", "fifth").toString()).toBe(expected);
+  });
+
+  test("test fifth Wednesday of october 2015", () => {
+    let meetup = new Meetup(2015, 10);
+    expect(meetup.day("Wednesday", "fifth")).toBeNull();
+  });
+
+  test("test fifth Thursday of november 2015", () => {
+    let meetup = new Meetup(2015, 11);
+    expect(meetup.day("Thursday", "fifth")).toBeNull();
+  });
+
+  test("test fifth Friday of december 2015", () => {
+    let meetup = new Meetup(2015, 12);
+    expect(meetup.day("Friday", "fifth")).toBeNull();
+  });
+
+  test("test fifth Saturday of january 2016", () => {
+    let meetup = new Meetup(2016, 1);
+    let expected = dateAsString(2016, 1, 30);
+    expect(meetup.day("Saturday", "fifth").toString()).toBe(expected);
+  });
+
+  test("test fifth Sunday of february 2016", () => {
+    let meetup = new Meetup(2016, 2);
+    expect(meetup.day("Sunday", "fifth")).toBeNull();
+  });
+
+  test("test fifth Monday of february 2016", () => {
+    let meetup = new Meetup(2016, 2);
+    let expected = dateAsString(2016, 2, 29);
+    expect(meetup.day("Monday", "fifth").toString()).toBe(expected);
+  });
+
+  test("test last Monday of march 2016", () => {
+    let meetup = new Meetup(2016, 3);
+    let expected = dateAsString(2016, 3, 28);
+    expect(meetup.day("Monday", "last").toString()).toBe(expected);
+  });
+
+  test("test last Tuesday of april 2016", () => {
+    let meetup = new Meetup(2016, 4);
+    let expected = dateAsString(2016, 4, 26);
+    expect(meetup.day("Tuesday", "last").toString()).toBe(expected);
+  });
+
+  test("test last Wednesday of may 2016", () => {
+    let meetup = new Meetup(2016, 5);
+    let expected = dateAsString(2016, 5, 25);
+    expect(meetup.day("Wednesday", "last").toString()).toBe(expected);
+  });
+
+  test("test last Thursday of june 2016", () => {
+    let meetup = new Meetup(2016, 6);
+    let expected = dateAsString(2016, 6, 30);
+    expect(meetup.day("Thursday", "last").toString()).toBe(expected);
+  });
+
+  test("test last Friday of july 2016", () => {
+    let meetup = new Meetup(2016, 7);
+    let expected = dateAsString(2016, 7, 29);
+    expect(meetup.day("Friday", "last").toString()).toBe(expected);
+  });
+
+  test("test last Saturday of august 2016", () => {
+    let meetup = new Meetup(2016, 8);
+    let expected = dateAsString(2016, 8, 27);
+    expect(meetup.day("Saturday", "last").toString()).toBe(expected);
+  });
+
+  test("test last Sunday of september 2016", () => {
+    let meetup = new Meetup(2016, 9);
+    let expected = dateAsString(2016, 9, 25);
+    expect(meetup.day("Sunday", "last").toString()).toBe(expected);
+  });
+
+  test("test last Sunday of february 2015", () => {
+    let meetup = new Meetup(2015, 2);
+    let expected = dateAsString(2015, 2, 22);
+    expect(meetup.day("Sunday", "last").toString()).toBe(expected);
+  });
+
+  test("test teenth Monday of october 2016", () => {
+    let meetup = new Meetup(2016, 10);
+    let expected = dateAsString(2016, 10, 17);
+    expect(meetup.day("Monday", "teenth").toString()).toBe(expected);
+  });
+
+  test("test teenth Tuesday of november 2016", () => {
+    let meetup = new Meetup(2016, 11);
+    let expected = dateAsString(2016, 11, 15);
+    expect(meetup.day("Tuesday", "teenth").toString()).toBe(expected);
+  });
+
+  test("test teenth Wednesday of december 2016", () => {
+    let meetup = new Meetup(2016, 12);
+    let expected = dateAsString(2016, 12, 14);
+    expect(meetup.day("Wednesday", "teenth").toString()).toBe(expected);
+  });
+
+  test("test teenth Thursday of january 2017", () => {
+    let meetup = new Meetup(2017, 1);
+    let expected = dateAsString(2017, 1, 19);
+    expect(meetup.day("Thursday", "teenth").toString()).toBe(expected);
+  });
+
+  test("test teenth Friday of february 2017", () => {
+    let meetup = new Meetup(2017, 2);
+    let expected = dateAsString(2017, 2, 17);
+    expect(meetup.day("Friday", "teenth").toString()).toBe(expected);
+  });
+
+  test("test teenth Saturday of march 2017", () => {
+    let meetup = new Meetup(2017, 3);
+    let expected = dateAsString(2017, 3, 18);
+    expect(meetup.day("Saturday", "teenth").toString()).toBe(expected);
+  });
+
+  test("test teenth Sunday of april 2017", () => {
+    let meetup = new Meetup(2017, 4);
+    let expected = dateAsString(2017, 4, 16);
+    expect(meetup.day("Sunday", "teenth").toString()).toBe(expected);
+  });
+});
+
+const { SimpleLinkedList, Element } = require("./simple-linked-list.js");
+
+describe("Simple Linked List", () => {
+  test("element datum", () => {
+    let element = new Element(1);
+    expect(element.datum()).toBe(1);
+  });
+
+  test("element tail", () => {
+    let element = new Element(1);
+    expect(element.isTail()).toBe(true);
+  });
+
+  test("element next default", () => {
+    let element = new Element(1);
+    expect(element.next()).toBe(null);
+  });
+
+  test("element next initialization", () => {
+    let element1 = new Element(1);
+    let element2 = new Element(2, element1);
+    expect(element2.next()).toEqual(element1);
+  });
+
+  test("empty list size", () => {
+    let list = new SimpleLinkedList();
+    expect(list.size()).toBe(0);
+  });
+
+  test("empty list empty", () => {
+    let list = new SimpleLinkedList();
+    expect(list.isEmpty()).toBe(true);
+  });
+
+  test("pushing element on list", () => {
+    let list = new SimpleLinkedList();
+    list.push(1);
+    expect(list.size()).toBe(1);
+  });
+
+  test("empty list 1 element", () => {
+    let list = new SimpleLinkedList();
+    list.push(1);
+    expect(list.isEmpty()).toBe(false);
+  });
+
+  test("peeking at list", () => {
+    let list = new SimpleLinkedList();
+    list.push(1);
+    expect(list.size()).toBe(1);
+    expect(list.peek()).toBe(1);
+  });
+
+  test("peeking at empty list", () => {
+    let list = new SimpleLinkedList();
+    expect(list.peek()).toBe(null);
+  });
+
+  test("access head element", () => {
+    let list = new SimpleLinkedList();
+    list.push(1);
+    let head = list.head();
+    expect(head instanceof Element).toBe(true);
+    expect(head.datum()).toBe(1);
+    expect(head.isTail()).toBe(true);
+  });
+
+  test("items are stacked", () => {
+    let list = new SimpleLinkedList();
+    list.push(1);
+    list.push(2);
+
+    expect(list.size()).toBe(2);
+    expect(list.head().datum()).toBe(2);
+    expect(list.head().next().datum()).toBe(1);
+  });
+
+  test("push 10 items", () => {
+    let list = new SimpleLinkedList();
+
+    for (let datum = 1; datum <= 10; datum++) {
+      list.push(datum);
+    }
+
+    expect(list.size()).toBe(10);
+    expect(list.peek()).toBe(10);
+  });
+
+  test("pop one item", () => {
+    let list = new SimpleLinkedList();
+    list.push(1);
+
+    expect(list.pop()).toBe(1);
+    expect(list.size()).toBe(0);
+  });
+
+  test("popping frenzy", () => {
+    let list = new SimpleLinkedList();
+
+    for (let datum = 1; datum <= 10; datum++) {
+      list.push(datum);
+    }
+
+    for (let count = 1; count <= 6; count++) {
+      list.pop();
+    }
+
+    expect(list.size()).toBe(4);
+    expect(list.peek()).toBe(4);
+  });
+
+  test("from a: empty array", () => {
+    let list = SimpleLinkedList.fromArray([]);
+
+    expect(list.size()).toBe(0);
+    expect(list.peek()).toBe(null);
+  });
+
+  test("from a: null", () => {
+    let list = SimpleLinkedList.fromArray(null);
+    expect(list.size()).toBe(0);
+    expect(list.peek()).toBe(null);
+  });
+
+  test("from a: 2 element array", () => {
+    let list = SimpleLinkedList.fromArray([1, 2]);
+    expect(list.size()).toBe(2);
+    expect(list.head().datum()).toBe(1);
+    expect(list.head().next().datum()).toBe(2);
+  });
+
+  test("from a: 10 item array", () => {
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let list = SimpleLinkedList.fromArray(arr);
+    expect(list.size()).toBe(10);
+    expect(list.peek()).toBe(1);
+    expect(
+      list
+        .head()
+        .next()
+        .next()
+        .next()
+        .next()
+        .next()
+        .next()
+        .next()
+        .next()
+        .next()
+        .datum(),
+    ).toBe(10);
+  });
+
+  test("to a: empty list", () => {
+    let list = new SimpleLinkedList();
+    expect(list.toArray()).toEqual([]);
+  });
+
+  test("to a: of 1 element list ", () => {
+    let list = SimpleLinkedList.fromArray([1]).toArray();
+    expect(list).toEqual([1]);
+  });
+
+  test("to a: of a 2 element list", () => {
+    let list = SimpleLinkedList.fromArray([1, 2]).toArray();
+    expect(list).toEqual([1, 2]);
+  });
+
+  test("reverse 2 element list", () => {
+    let list = SimpleLinkedList.fromArray([1, 2]);
+    // reversedList and list need not be the same object
+    let reversedList = list.reverse();
+
+    expect(reversedList.peek()).toBe(2);
+    expect(reversedList.head().next().datum()).toBe(1);
+    expect(reversedList.head().next().isTail()).toBe(true);
+  });
+
+  test("reverse 10 element list", () => {
+    let data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let list = SimpleLinkedList.fromArray(data);
+    expect(data.reverse()).toEqual(list.reverse().toArray());
+  });
+
+  test("roundtrip 10 element array", () => {
+    let data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let list = SimpleLinkedList.fromArray(data).toArray();
+    expect(list).toEqual(data);
+  });
+});
