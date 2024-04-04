@@ -14,7 +14,6 @@ class Clock {
     if (time < 0) {
       time = 24 * 60 + (time % (24 * 60));
     }
-    console.log(time);
     return [Math.floor(time / 60), time % 60];
   }
   parseTime() {

@@ -31,7 +31,6 @@ class Robot {
       }
       name += Robot.NAMENUM[Math.floor(Math.random() * Robot.NAMENUM.length)];
     });
-    console.log(name);
     return name;
   }
 }
