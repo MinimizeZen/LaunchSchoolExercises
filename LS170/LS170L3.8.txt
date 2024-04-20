@@ -1,0 +1,7 @@
+1) Required: Method, Path, Host
+    Optional: parameters, body, other headers
+2) Required: Status, 
+    Optional: Headers, Body
+3) GET is typically used to request data while (Should be used for read only)
+    POST is used to send data
+    
